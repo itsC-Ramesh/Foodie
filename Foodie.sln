@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Domain", "Foodie.Domain\Foodie.Domain.csproj", "{F06D2D8D-1C9B-43F5-8FA5-A3C25BACA64C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Application", "Foodie.Application\Foodie.Application.csproj", "{797ED671-4684-4B15-8814-3DB242E54927}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Infrastructure", "Foodie.Infrastructure\Foodie.Infrastructure.csproj", "{18B32219-0A94-40A6-998A-35F698DDEA9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Contracts", "Foodie.Contracts\Foodie.Contracts.csproj", "{448BD5D6-0715-42D3-AE0A-7292DBA922A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foodie.Api", "Foodie.Api\Foodie.Api.csproj", "{B330B437-10FF-4B5D-A0D9-9ED05609B770}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A506B46-81F4-4973-A4ED-15B8B1EA6345}"
+	ProjectSection(SolutionItems) = preProject
+		readme.txt = readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F06D2D8D-1C9B-43F5-8FA5-A3C25BACA64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06D2D8D-1C9B-43F5-8FA5-A3C25BACA64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06D2D8D-1C9B-43F5-8FA5-A3C25BACA64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06D2D8D-1C9B-43F5-8FA5-A3C25BACA64C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{797ED671-4684-4B15-8814-3DB242E54927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797ED671-4684-4B15-8814-3DB242E54927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797ED671-4684-4B15-8814-3DB242E54927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797ED671-4684-4B15-8814-3DB242E54927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B32219-0A94-40A6-998A-35F698DDEA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B32219-0A94-40A6-998A-35F698DDEA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B32219-0A94-40A6-998A-35F698DDEA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B32219-0A94-40A6-998A-35F698DDEA9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448BD5D6-0715-42D3-AE0A-7292DBA922A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448BD5D6-0715-42D3-AE0A-7292DBA922A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448BD5D6-0715-42D3-AE0A-7292DBA922A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448BD5D6-0715-42D3-AE0A-7292DBA922A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B330B437-10FF-4B5D-A0D9-9ED05609B770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B330B437-10FF-4B5D-A0D9-9ED05609B770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B330B437-10FF-4B5D-A0D9-9ED05609B770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B330B437-10FF-4B5D-A0D9-9ED05609B770}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1EB4C60-AD45-40F1-8FCE-BCE642ABD61E}
+	EndGlobalSection
+EndGlobal
