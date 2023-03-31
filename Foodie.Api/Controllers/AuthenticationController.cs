@@ -1,6 +1,9 @@
-using Foodie.Application.Services.Authentication;
+using Foodie.Application.Authentication;
+using Foodie.Application.Authentication.Commands.Register;
+using Foodie.Application.Authentication.Queries.Login;
 using Foodie.Contracts.Authentication;
 using Foodie.Domain.Common.Errors;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Foodie.Api.Controllers;
@@ -8,43 +11,34 @@ namespace Foodie.Api.Controllers;
 [Route("api/auth")]
 public class AuthenticationController : BaseController
 {
-    private readonly IAuthenticationService _authService;
+    private readonly ISender _mediator;
 
-    public AuthenticationController(IAuthenticationService authService)
+    public AuthenticationController(IMediator mediator)
     {
-        _authService = authService;
+        _mediator = mediator;
     }
 
     [HttpPost("register")]
-    public IActionResult Register(RegistrationRequest request)
+    public async Task<IActionResult> Register(RegistrationRequest request)
     {
-        var authResult = _authService.Register(
-            request.FirstName,
+        var command = new RegisterCommand(request.FirstName,
             request.LastName,
             request.Email,
-            request.Password
-        );
+            request.Password);
+
+        var authResult = await _mediator.Send(command);
 
         return authResult.Match(
             authResult => Ok(MapAuthResult(authResult)),
             errors => Problem(errors));
     }
 
-    private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
-    {
-        return new AuthenticationResponse(
-                    authResult.User.Id,
-                    authResult.User.FirstName,
-                    authResult.User.LastName,
-                    authResult.User.Email,
-                    authResult.Token
-                );
-    }
-
     [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        var authResult = _authService.Login(request.Email, request.Password);
+        var query = new LoginQuery(request.Email, request.Password);
+
+        var authResult = await _mediator.Send(query);
 
         if (authResult.IsError
             && authResult.FirstError == Errors.Authentication.InvalidCredentials)
@@ -54,5 +48,13 @@ public class AuthenticationController : BaseController
 
         return authResult.Match(authResult => Ok(MapAuthResult(authResult)), Problem);
     }
+
+    private static AuthenticationResponse MapAuthResult(
+        AuthenticationResult authResult) => new AuthenticationResponse(
+                                                    authResult.User.Id,
+                                                    authResult.User.FirstName,
+                                                    authResult.User.LastName,
+                                                    authResult.User.Email,
+                                                    authResult.Token);
 
 }

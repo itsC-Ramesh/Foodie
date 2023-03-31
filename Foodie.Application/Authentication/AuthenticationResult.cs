@@ -1,6 +1,6 @@
 using Foodie.Domain.Entities;
 
-namespace Foodie.Application.Services.Authentication
+namespace Foodie.Application.Authentication
 {
     public record AuthenticationResult
     (
