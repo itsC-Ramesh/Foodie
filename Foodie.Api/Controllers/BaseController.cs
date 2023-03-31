@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using Foodie.Api.Common.ItemKeys;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Foodie.Api.Controllers;
@@ -7,8 +8,21 @@ namespace Foodie.Api.Controllers;
 [ApiController]
 public class BaseController : ControllerBase
 {
-    public IActionResult Problem(List<Error> error)
+    protected IActionResult Problem(List<Error> errors)
     {
-        return Problem(error);
+        HttpContext.Items[HttpContextItemKeys.Errors] = errors;
+
+        var firstError = errors[0];
+
+        var statusCode = firstError.Type switch
+        {
+            ErrorType.Conflict => StatusCodes.Status409Conflict,
+            ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.NotFound => StatusCodes.Status404NotFound,
+            ErrorType.Failure => StatusCodes.Status500InternalServerError,
+            _ => StatusCodes.Status500InternalServerError,
+        };
+
+        return Problem(statusCode: statusCode, title: firstError.Description);
     }
 }
