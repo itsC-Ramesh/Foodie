@@ -1,5 +1,7 @@
+using ErrorOr;
 using Foodie.Application.Common.Interfaces.Authentication;
 using Foodie.Application.Common.Interfaces.Persistance;
+using Foodie.Domain.Common.Errors;
 using Foodie.Domain.Entities;
 
 namespace Foodie.Application.Services.Authentication;
@@ -14,13 +16,13 @@ public class AuthenticationService : IAuthenticationService
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
     }
-    public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+    public ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
     {
         //Check if user exists
         var user = _userRepository.GetUserByEmail(email);
         if (user != null)
         {
-            throw new Exception("User with given name already exists");
+            return Errors.User.DuplicateEmail;
         }
 
         //Create & Register User
@@ -40,15 +42,15 @@ public class AuthenticationService : IAuthenticationService
         return new AuthenticationResult(user, token);
     }
 
-    public AuthenticationResult Login(string email, string password)
+    public ErrorOr<AuthenticationResult> Login(string email, string password)
     {
         var user = _userRepository.GetUserByEmail(email);
 
         //Validate User
-        if (user == null) throw new Exception("Invalid Email");
+        if (user == null) return Errors.Authentication.InvalidCredentials;
 
         //Validate password
-        if (password != user.Password) throw new Exception("Invalid Password");
+        if (password != user.Password) return Errors.Authentication.InvalidCredentials;
 
         //Generate Token
         var token = _jwtTokenGenerator.GenerateToken(user);

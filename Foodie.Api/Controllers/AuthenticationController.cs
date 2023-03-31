@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Foodie.Api.Controllers;
 
-[ApiController]
 [Route("api/auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : BaseController
 {
     private readonly IAuthenticationService _authService;
 
@@ -25,15 +24,20 @@ public class AuthenticationController : ControllerBase
             request.Password
         );
 
-        AuthenticationResponse response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token
-        );
+        return authResult.Match(
+            authResult => Ok(MapAuthResult(authResult)),
+            errors => Problem(errors));
+    }
 
-        return Ok(response);
+    private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
+    {
+        return new AuthenticationResponse(
+                    authResult.User.Id,
+                    authResult.User.FirstName,
+                    authResult.User.LastName,
+                    authResult.User.Email,
+                    authResult.Token
+                );
     }
 
     [HttpPost("login")]
@@ -41,15 +45,7 @@ public class AuthenticationController : ControllerBase
     {
         var authResult = _authService.Login(request.Email, request.Password);
 
-        AuthenticationResponse response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token
-        );
-
-        return Ok(response);
+        return authResult.Match(authResult => Ok(MapAuthResult(authResult)), Problem);
     }
 
 }
