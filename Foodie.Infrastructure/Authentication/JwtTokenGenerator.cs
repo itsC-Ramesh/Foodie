@@ -14,7 +14,7 @@ namespace Foodie.Infrastructure.Authentication
         private readonly IDateTimeProvider _dateTime;
         private readonly JwtSettings _jwtSettings;
 
-        public JwtTokenGenerator(IDateTimeProvider dateTime, 
+        public JwtTokenGenerator(IDateTimeProvider dateTime,
             IOptions<JwtSettings> jwtOptions)
         {
             _dateTime = dateTime;

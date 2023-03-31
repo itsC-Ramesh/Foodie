@@ -7,4 +7,3 @@ namespace Foodie.Application.Common.Interfaces.Authentication
         string GenerateToken(User user);
     }
 }
- 
