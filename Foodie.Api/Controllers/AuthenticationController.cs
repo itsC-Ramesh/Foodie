@@ -1,5 +1,6 @@
 using Foodie.Application.Services.Authentication;
 using Foodie.Contracts.Authentication;
+using Foodie.Domain.Common.Errors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Foodie.Api.Controllers;
@@ -44,6 +45,12 @@ public class AuthenticationController : BaseController
     public IActionResult Login(LoginRequest request)
     {
         var authResult = _authService.Login(request.Email, request.Password);
+
+        if (authResult.IsError
+            && authResult.FirstError == Errors.Authentication.InvalidCredentials)
+            return Problem(
+                statusCode: StatusCodes.Status401Unauthorized,
+                title: authResult.FirstError.Description);
 
         return authResult.Match(authResult => Ok(MapAuthResult(authResult)), Problem);
     }
