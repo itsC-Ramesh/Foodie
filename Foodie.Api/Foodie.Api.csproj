@@ -7,6 +7,11 @@
     <UserSecretsId>bdc8e78f-beae-4edc-8257-d99901cf2f04</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.3.0" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Foodie.Contracts\Foodie.Contracts.csproj" />

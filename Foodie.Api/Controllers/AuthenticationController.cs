@@ -3,6 +3,7 @@ using Foodie.Application.Authentication.Commands.Register;
 using Foodie.Application.Authentication.Queries.Login;
 using Foodie.Contracts.Authentication;
 using Foodie.Domain.Common.Errors;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,31 +13,28 @@ namespace Foodie.Api.Controllers;
 public class AuthenticationController : BaseController
 {
     private readonly ISender _mediator;
+    private readonly IMapper _mapper;
 
-    public AuthenticationController(IMediator mediator)
+    public AuthenticationController(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegistrationRequest request)
     {
-        var command = new RegisterCommand(request.FirstName,
-            request.LastName,
-            request.Email,
-            request.Password);
+        var command = _mapper.Map<RegisterCommand>(request);
 
         var authResult = await _mediator.Send(command);
 
-        return authResult.Match(
-            authResult => Ok(MapAuthResult(authResult)),
-            errors => Problem(errors));
+        return authResult.Match(authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)), Problem);
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var query = new LoginQuery(request.Email, request.Password);
+        var query = _mapper.Map<LoginQuery>(request);
 
         var authResult = await _mediator.Send(query);
 
@@ -46,15 +44,6 @@ public class AuthenticationController : BaseController
                 statusCode: StatusCodes.Status401Unauthorized,
                 title: authResult.FirstError.Description);
 
-        return authResult.Match(authResult => Ok(MapAuthResult(authResult)), Problem);
+        return authResult.Match(authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)), Problem);
     }
-
-    private static AuthenticationResponse MapAuthResult(
-        AuthenticationResult authResult) => new AuthenticationResponse(
-                                                    authResult.User.Id,
-                                                    authResult.User.FirstName,
-                                                    authResult.User.LastName,
-                                                    authResult.User.Email,
-                                                    authResult.Token);
-
 }
