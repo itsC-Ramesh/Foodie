@@ -1,11 +1,13 @@
 ﻿using ErrorOr;
 using Foodie.Api.Common.ItemKeys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Foodie.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class BaseController : ControllerBase
 {
     protected IActionResult Problem(List<Error> errors)

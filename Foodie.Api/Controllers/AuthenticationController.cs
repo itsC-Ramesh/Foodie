@@ -5,6 +5,7 @@ using Foodie.Contracts.Authentication;
 using Foodie.Domain.Common.Errors;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Foodie.Api.Controllers;
@@ -22,6 +23,7 @@ public class AuthenticationController : BaseController
     }
 
     [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<IActionResult> Register(RegistrationRequest request)
     {
         var command = _mapper.Map<RegisterCommand>(request);
@@ -32,6 +34,7 @@ public class AuthenticationController : BaseController
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login(LoginRequest request)
     {
         var query = _mapper.Map<LoginQuery>(request);
