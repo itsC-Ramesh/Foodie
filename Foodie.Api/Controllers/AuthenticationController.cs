@@ -1,4 +1,3 @@
-using Foodie.Application.Authentication;
 using Foodie.Application.Authentication.Commands.Register;
 using Foodie.Application.Authentication.Queries.Login;
 using Foodie.Contracts.Authentication;

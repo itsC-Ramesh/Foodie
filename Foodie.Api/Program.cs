@@ -1,8 +1,6 @@
 using Foodie.Api;
-using Foodie.Api.Common.Errors;
 using Foodie.Application;
 using Foodie.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
